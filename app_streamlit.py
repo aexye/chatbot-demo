@@ -178,9 +178,8 @@ def sql_tool(input_schema: SQLToolInputSchema) -> SQLToolOutputSchema:
 
 # Add before the main() function
 # Initialize the main agent with schema alignment
-api_key = os.getenv("GEMINI_API_KEY")
 client = instructor.from_openai(
-    OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/"),
+    OpenAI(api_key=st.secrets["gemini_api_key"], base_url="https://generativelanguage.googleapis.com/v1beta/openai/"),
     mode=instructor.Mode.JSON,
 )
 model = "gemini-1.5-flash-latest"
