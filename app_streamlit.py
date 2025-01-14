@@ -35,6 +35,7 @@ def main():
     config = SQLAgentConfig(
         project_id="data-gaming-425312",
         dataset_id="horse_chatbot",
+        table_id="racecards",
         credentials_dict=st.secrets["gcp_service_account"],
         model_name="gemini-1.5-flash-002",
         temperature=0,
@@ -43,23 +44,6 @@ def main():
     
     # Create SQL agent
     agent = SQLAgent(config)
-    
-    # Example schema for the racecards table
-    racecards_schema = """
-    Table: data-gaming-425312.horse_chatbot.racecards
-    
-    Columns:
-    - Race details: race_id, race_name, race_date, race_type, race_class, race_distance, course_name
-    - Horse details: horse_name, horse_age, horse_sex, horse_draw, rating
-    - Performance: runner_odds, avg_form, last_position, days_from_last_race
-    - Personnel: jockey_name
-    - Win rates: hr_win_rate, jc_win_rate, tr_win_rate (horse, jockey, trainer)
-    - Recent performance: jc_14d_win_rate, tr_14d_win_rate
-    
-    Notes:
-    - one row = one horse per one race
-    - All rates are decimal values between 0 and 1
-    """
     
     # Streamlit UI
     st.title("Horse Racing SQL Assistant")
@@ -70,8 +54,8 @@ def main():
     
     if st.button("Get Answer"):
         with st.spinner("Processing your question..."):
-            # Process the question
-            result = agent.process_question(user_question, racecards_schema)
+            # Process the question (no schema needed anymore)
+            result = agent.process_question(user_question)
             
             # Display results
             if result["success"]:
