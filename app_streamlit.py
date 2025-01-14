@@ -39,7 +39,7 @@ def main():
         credentials_dict=st.secrets["gcp_service_account"],
         model_name="gemini-1.5-flash-002",
         temperature=0,
-        max_iterations=10
+        max_iterations=15
     )
     
     # Create SQL agent
